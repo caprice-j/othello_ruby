@@ -1,21 +1,25 @@
 require "./othello_game.rb"
+require "./othello_AI.rb"
 
 
 $brd = # overwrite
 [
-   [OU, OU, OU, OU, OU, OU, OU, OU, OU, OU],
-   [OU, EM, EM, EM, EM, EM, EM, EM, EM, OU],
-   [OU, EM, EM, EM, EM, EM, EM, EM, EM, OU],
-   [OU, WH, BL, BL, BL, BL, BL, BL, BL, OU],
-   [OU, WH, BL, BL, BL, WH, BL, BL, BL, OU],
-   [OU, WH, BL, EM, WH, BL, BL, BL, BL, OU],
-   [OU, WH, BL, BL, BL, BL, BL, BL, BL, OU],
-   [OU, WH, BL, BL, BL, BL, BL, BL, BL, OU],
-   [OU, EM, EM, EM, EM, EM, EM, EM, EM, OU],
-   [OU, OU, OU, OU, OU, OU, OU, OU, OU, OU]
+   [OUT, OUT, OUT, OUT, OUT, OUT, OUT, OUT, OUT, OUT],
+   [OUT,  EM,  EM,  EM,  EM,  EM,  EM,  EM,  EM, OUT],
+   [OUT,  EM,  EM,  EM,  EM,  EM,  EM,  EM,  EM, OUT],
+   [OUT, WHT, BLK, BLK, BLK, BLK, BLK, BLK, BLK, OUT],
+   [OUT, WHT, BLK, BLK, BLK, WHT, BLK, BLK, BLK, OUT],
+   [OUT, WHT, BLK,  EM, WHT, BLK, BLK, BLK, BLK, OUT],
+   [OUT, WHT, BLK, BLK, BLK, BLK, BLK, BLK, BLK, OUT],
+   [OUT, WHT, BLK, BLK, BLK, BLK, BLK, BLK, BLK, OUT],
+   [OUT,  EM,  EM,  EM,  EM,  EM,  EM,  EM,  EM, OUT],
+   [OUT, OUT, OUT, OUT, OUT, OUT, OUT, OUT, OUT, OUT]
 ]
 
+# show
+# place [5,3], WHT
 
 show
-place [3,5], WH
+rp = RandomAI.new(WHT)
+place(rp.think, rp.cl)
 show
