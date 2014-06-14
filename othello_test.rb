@@ -1,4 +1,4 @@
-require "./othello_game.rb"
+require "./othello_board.rb"
 require "./othello_AI.rb"
 
 

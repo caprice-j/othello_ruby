@@ -5,6 +5,7 @@ WHT = -1   # WHTite
  EM =  0   # EMpty
 BLK =  1   # BLKack
 OUT =  2   # OUTt of board
+NO_LEGAL_MOVE = [-1,-1]
 
 # rotate 90 degrees    ------------------------------------->  y
 $brd =
@@ -13,7 +14,7 @@ $brd =
    [OUT,  EM,  EM,  EM,  EM,  EM,  EM,  EM,  EM, OUT], # 1
    [OUT,  EM,  EM,  EM,  EM,  EM,  EM,  EM,  EM, OUT], # 2
    [OUT,  EM,  EM,  EM,  EM,  EM,  EM,  EM,  EM, OUT], # 3
-   [OUT,  EM,  EM,  EM,  EM, WHT,  EM,  EM,  EM, OUT], # 4
+   [OUT,  EM,  EM,  EM, BLK, WHT,  EM,  EM,  EM, OUT], # 4
    [OUT,  EM,  EM,  EM, WHT, BLK,  EM,  EM,  EM, OUT], # 5
    [OUT,  EM,  EM,  EM,  EM,  EM,  EM,  EM,  EM, OUT], # 6
    [OUT,  EM,  EM,  EM,  EM,  EM,  EM,  EM,  EM, OUT], # 7
@@ -32,7 +33,7 @@ $brd_x_lim = $brd.length    - 1
 GREEN_COLORED = "\e[32m"
 BLACK_COLORED = "\e[0m"
 
-def show
+def show_board
   puts     # equal to '\n'
   print "  "
   ($brd_x_lim-1).times{|i| print " #{i+1}"}
@@ -54,7 +55,7 @@ def show
   puts
 end
 
-def count_disk_of color
+def count_squares_of color
   n = 0
   $brd.each{ | column |
     column.each{ | sq |
