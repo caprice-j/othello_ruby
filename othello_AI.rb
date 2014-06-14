@@ -7,6 +7,7 @@ class AI
     # puts "initializer is called"
     @cl = color
   end
+  attr_reader :cl
 end
 
 class RandomPlayer < AI

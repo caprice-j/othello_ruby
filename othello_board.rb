@@ -8,8 +8,10 @@ OUT =  2   # OUTt of board
 NO_LEGAL_MOVE = [-1,-1]
 
 
-GREEN_COLORED = "\e[32m"
-BLACK_COLORED = "\e[0m"
+  BLUE_COLORED = "\e[34m"
+GREEN_COLORED  = "\e[32m"
+YELLOW_COLORED = "\e[33m"
+BLACK_COLORED  = "\e[0m"
 DIRECTIONS =  [[-1,-1],[ 0,-1],[ 1,-1],
                [-1, 0]        ,[ 1, 0],
                [-1, 1],[ 0, 1],[ 1, 1] ]
@@ -66,18 +68,23 @@ class Board
     return copied
   end
 
-  def show
+  def show color=EM
     puts     # equal to '\n'
-    print "  "
+    print "  " + YELLOW_COLORED
     (@x_lim-1).times{|i| print " #{i+1}"}
-    puts
+    print BLACK_COLORED + ""
     @y_lim.times do | y |
       @x_lim.times do | x |
         if x==0 && y != 0 then print "#{y}  " end
         case state[x][y]
         when BLK then  print GREEN_COLORED + "B " + BLACK_COLORED
         when WHT then  print "W "
-        when  EM then  print "- "
+        when  EM then
+          if captured_squares([x,y], color) == [] then
+            print "- "
+          else
+            print BLUE_COLORED + "* " + BLACK_COLORED
+          end
         end
       end
       puts
