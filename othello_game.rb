@@ -1,7 +1,8 @@
 require "./othello_board.rb"
 require "./othello_AI.rb"
 
-ROUND_NUM = 1
+
+ROUND_NUM = 10
 
 ## rules
 # Players can pass if and only if there isn't any legal moves.
@@ -12,7 +13,7 @@ ROUND_NUM.times do
     game_board = Board.new(6,6)
     game_board.show if ROUND_NUM == 1
     # p_black = RandomAI.new(BLK)   # player_black
-    p_black = MinimaxPlayer.new(BLK)
+    p_black = OpenDegreePlayer.new(BLK)
     p_white = RandomPlayer.new(WHT)  # player_white
 
     turn = 1
@@ -46,9 +47,9 @@ ROUND_NUM.times do
     n_white = game_board.count_squares_of p_white.cl
 
 
-       if n_white >  n_black then print "Winner is white."
-    elsif n_white == n_black then print "draw"
-     else print "Winner is " + GREEN_COLORED + "black." + BLACK_COLORED
+       if n_white >  n_black then print "Winner is white."; game_board.show
+    elsif n_white == n_black then print "draw"            ; game_board.show
+     else print "Winner is " + GREEN_COLORED + "black." + BLACK_COLORED ; game_board.show
      end
      print "  # BLACK: #{n_black}  WHITE: #{n_white} \n"
 end

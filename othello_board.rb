@@ -10,7 +10,9 @@ NO_LEGAL_MOVE = [-1,-1]
 
 GREEN_COLORED = "\e[32m"
 BLACK_COLORED = "\e[0m"
-
+DIRECTIONS =  [[-1,-1],[ 0,-1],[ 1,-1],
+               [-1, 0]        ,[ 1, 0],
+               [-1, 1],[ 0, 1],[ 1, 1] ]
 
 class Board
 
@@ -96,6 +98,29 @@ class Board
     return n
   end
 
+  def kaihodo xy, color
+    x = xy[0]
+    y = xy[1]
+    assert_equal state[x][y], EM
+
+    sqs = captured_squares([x, y], color)
+    return kaihodo_inner(sqs)
+  end
+
+  def kaihodo_inner sqs
+    val = 0
+    sqs.each{ |sq|
+      x = sq[0]
+      y = sq[1]
+      DIRECTIONS.each{ |xy|
+        if state[ x - xy[0] ][ y-xy[1] ] == EM then
+          val += 1
+        end
+      }
+    }
+    return val
+  end
+
   def place xy, color
     x = xy[0]
     y = xy[1]
@@ -133,11 +158,8 @@ class Board
     assert_equal state[ startSq[0] ][ startSq[1] ], EM
     enemyColor = oppositeColor(myColor)
 
-    directions = [[-1,-1],[ 0,-1],[ 1,-1],
-                  [-1, 0]        ,[ 1, 0],
-                  [-1, 1],[ 0, 1],[ 1, 1] ]
     stack = []
-    directions.each do |xy|
+    DIRECTIONS.each do |xy|
       n_push = 0
       x = startSq[0]
       y = startSq[1]
@@ -173,6 +195,8 @@ class Board
     end
     return stack
   end
+
+
 
   attr_accessor :x_lim, :y_lim, :state, :history
 
