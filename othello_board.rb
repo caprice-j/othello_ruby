@@ -8,6 +8,8 @@ OUT =  2   # OUTt of board
 NO_LEGAL_MOVE = [-1,-1]
 
 
+UNDERLINE = "\x1b[4m"
+BLACK_BACKGROUND  = "\e[0m"
   BLUE_COLORED = "\e[34m"
 GREEN_COLORED  = "\e[32m"
 YELLOW_COLORED = "\e[33m"
@@ -76,6 +78,9 @@ class Board
     @y_lim.times do | y |
       @x_lim.times do | x |
         if x==0 && y != 0 then print "#{y}  " end
+        if @history.last != nil && (@history.last)[0] == [x,y] then
+          print UNDERLINE
+        end
         case state[x][y]
         when BLK then  print GREEN_COLORED + "B " + BLACK_COLORED
         when WHT then  print "W "
@@ -86,6 +91,7 @@ class Board
             print BLUE_COLORED + "% " + BLACK_COLORED
           end
         end
+        print BLACK_BACKGROUND
       end
       puts
     end
