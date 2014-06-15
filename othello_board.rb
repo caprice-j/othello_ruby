@@ -81,18 +81,17 @@ class Board
         when WHT then  print "W "
         when  EM then
           if captured_squares([x,y], color) == [] then
-            print "- "
+            print ". "
           else
-            print BLUE_COLORED + "* " + BLACK_COLORED
+            print BLUE_COLORED + "% " + BLACK_COLORED
           end
         end
       end
       puts
     end
-    puts
-    print "  "
+    print "  " + YELLOW_COLORED
     (@x_lim-1).times{|i| print " #{i+1}"}
-    puts
+    print BLACK_COLORED + ""
   end
 
   def count_squares_of color

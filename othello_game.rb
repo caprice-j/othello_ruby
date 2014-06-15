@@ -42,7 +42,7 @@ ROUND_NUM.times do
               next_color = WHT
               break
             end
-            print "\n xy: ";   xy = STDIN.gets.to_i
+            print "\n "+YELLOW_COLORED+"x"+BLACK_COLORED+"y: ";   xy = STDIN.gets.to_i
             x = (xy / 10).to_i
             y = (xy % 10)
             puts x
@@ -90,9 +90,9 @@ ROUND_NUM.times do
     n_white = game_board.count_squares_of p_white.cl
 
 
-       if n_white >  n_black then print "Winner is white."; game_board.show
-    elsif n_white == n_black then print "draw"            ; game_board.show
-     else print "Winner is " + GREEN_COLORED + "black." + BLACK_COLORED ; game_board.show
+       if n_white >  n_black then print " Winner is white."; game_board.show
+    elsif n_white == n_black then print " draw"            ; game_board.show
+     else print " Winner is " + GREEN_COLORED + "black." + BLACK_COLORED ; game_board.show
      end
-     print "  # BLACK: #{n_black}  WHITE: #{n_white} \n"
+     print "   BLACK: #{n_black}  WHITE: #{n_white} \n"
 end
