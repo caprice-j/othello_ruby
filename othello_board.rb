@@ -144,14 +144,14 @@ class Board
     xy, flipped = history.pop
     state[ xy[0] ][ xy[1] ] = EM
     flipped.each do |sq|
-     state[ sq[0] ][ sq[1] ] = oppositeColor( state[ sq[0] ][ sq[1] ] )
+     state[ sq[0] ][ sq[1] ] = back( state[ sq[0] ][ sq[1] ] )
    end
   end
 
   def flip sqs
     x = sqs[0][0]
     y = sqs[0][1]
-    col = oppositeColor( state[x][y] )
+    col = back( state[x][y] )
     sqs.each do |sq|
       state[ sq[0] ][ sq[1] ] = col
     end
@@ -161,9 +161,13 @@ class Board
     return col == BLK ? WHT : BLK
   end
 
+  def back col
+    return oppositeColor(col)
+  end
+
   def captured_squares startSq, myColor
     assert_equal state[ startSq[0] ][ startSq[1] ], EM
-    enemyColor = oppositeColor(myColor)
+    enemyColor = back(myColor)
 
     stack = []
     DIRECTIONS.each do |xy|

@@ -72,12 +72,12 @@ ROUND_NUM.times do
           break
         end
         pass_flag = true
-        game_board.show( game_board.oppositeColor(next_color) )if ROUND_NUM == 1
+        game_board.show( game_board.back(next_color) )if ROUND_NUM == 1
 
         next
       end
       game_board.place(next_move, next_color)
-      game_board.show( game_board.oppositeColor(next_color) )if ROUND_NUM == 1
+      game_board.show( game_board.back(next_color) )if ROUND_NUM == 1
       turn += 1
       pass_flag = false
       # sleep 1

@@ -48,7 +48,7 @@ class MinimaxPlayer < AI
         # if(edges.index([x,y])!=nil) then
         #   val += brd.state[x][y] == @cl ? 100 : -1000 if brd.state[x][y] != EM
         # end
-        # val -= (brd.legal_moves_of(brd.oppositeColor(@cl))).length * 20
+        # val -= (brd.legal_moves_of(brd.back(@cl))).length * 20
 
 
       end
@@ -73,7 +73,7 @@ class MinimaxPlayer < AI
     if lgl == [] then
       return NO_LEGAL_MOVE if depth == 0
       # pass next arguments
-      values.push( minimax( brd, brd.oppositeColor(now_player), depth+1 ) )
+      values.push( minimax( brd, brd.back(now_player), depth+1 ) )
       # history redo
     else
 
@@ -81,7 +81,7 @@ class MinimaxPlayer < AI
 
         brd.place mv, now_player
         # brd.show
-        values.push( minimax( brd, brd.oppositeColor(now_player), depth+1 ) )
+        values.push( minimax( brd, brd.back(now_player), depth+1 ) )
         brd.redo
       end
     end
@@ -130,7 +130,7 @@ class OpenDegreePlayer < AI
     if lgl == [] then
       return NO_LEGAL_MOVE if depth == 0
       # pass next arguments
-      degrees.push( minimax( brd, brd.oppositeColor(now_player), depth+1, od ) )
+      degrees.push( minimax( brd, brd.back(now_player), depth+1, od ) )
       # history redo
     else
       lgl.each do |mv| # all search
@@ -139,9 +139,9 @@ class OpenDegreePlayer < AI
         brd.place mv, now_player
         # brd.show
         if now_player == @cl then
-          degrees.push( minimax( brd, brd.oppositeColor(now_player), depth+1, od + kh ) )
+          degrees.push( minimax( brd, brd.back(now_player), depth+1, od + kh ) )
         else
-          degrees.push( minimax( brd, brd.oppositeColor(now_player), depth+1, od - kh ) )
+          degrees.push( minimax( brd, brd.back(now_player), depth+1, od - kh ) )
         end
         brd.redo
       end
