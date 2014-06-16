@@ -1,10 +1,10 @@
 require 'minitest/unit'  # test framework
 include MiniTest::Assertions
 
+OUT = -2   # OUTt of board
 WHT = -1   # WHTite
  EM =  0   # EMpty
 BLK =  1   # BLKack
-OUT =  2   # OUTt of board
 NO_LEGAL_MOVE = [-1,-1]
 
 
@@ -212,6 +212,62 @@ class Board
     return stack
   end
 
+  def kifu
+
+    inner_x = @x_lim - 1
+    inner_y = @y_lim - 1
+
+    move_number = Array.new(inner_x+2) { |x|
+      Array.new(inner_y+2){ |y|
+        if (x == 0 || x == inner_x + 1 || y == 0 || y == inner_y + 1 ) then
+          OUT
+        else
+          EM
+        end
+      }
+    }
+    n = (x_lim-1)*(y_lim-1)-4
+    while xy = history.pop
+      x = xy[0][0]
+      y = xy[0][1]
+      move_number[x][y] = n
+      n -= 1
+    end
+
+    f = open("kifu.txt", "a")
+    tm = Time.now
+    f.write("\nBLACK #{count_squares_of BLK}  WHITE #{count_squares_of WHT}  ")
+    f.write("#{tm.year}#{sprintf("%02d",tm.month)}#{sprintf("%02d",tm.day)}")
+    f.write(" #{sprintf("%02d",tm.hour)}:#{sprintf("%02d",tm.min)}")
+    print "  " + YELLOW_COLORED
+    (@x_lim-1).times{|i|
+      print "  #{i+1} "
+    }
+    print BLACK_COLORED + ""
+
+
+    @y_lim.times do | y |
+      @x_lim.times do | x |
+        if x==0 && y != 0 then 
+          print "#{y}  " 
+        end
+        if move_number[x][y] == OUT then
+        else
+          print GREEN_COLORED if move_number[x][y] % 2  == 0
+          print sprintf("%3d ", move_number[x][y].to_s)
+          f.write("#{sprintf("%3d ", move_number[x][y].to_s)}")
+          print BLACK_BACKGROUND
+        end
+      end
+      # f.write("  #{y}") if move_number[x][y] != OUT
+      f.write("\n")
+      puts
+    end
+    print "  " + YELLOW_COLORED
+    (@x_lim-1).times{|i| print "  #{i+1} "}
+    print BLACK_COLORED + ""
+
+  end
 
 
   attr_accessor :x_lim, :y_lim, :state, :history

@@ -120,7 +120,7 @@ class OpenDegreePlayer < AI
   end
 
   def minimax brd, now_player, depth, od
-    if depth >= 5 then
+    if depth >= 3 then
       return evaluate brd,od
       # return od
     end

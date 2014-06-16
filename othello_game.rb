@@ -95,4 +95,5 @@ ROUND_NUM.times do
      else print " Winner is " + GREEN_COLORED + "black." + BLACK_COLORED ; game_board.show
      end
      print "   BLACK: #{n_black}  WHITE: #{n_white} \n"
+     game_board.kifu
 end
