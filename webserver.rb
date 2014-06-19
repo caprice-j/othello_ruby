@@ -40,7 +40,7 @@ args.gsub!(%r{^http://}, '')
 args = args.split(/[ :]/).compact
 
 server = WEBrick::HTTPServer.new(
-  :Port => args.pop || 8080,
+  :Port => args.pop || 8888,
   # :BindAddress => args.pop || '0.0.0.0',
   :DocumentRoot => Dir.pwd
 )
