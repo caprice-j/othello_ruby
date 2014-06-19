@@ -81,6 +81,7 @@ ROUND_NUM.times do
       turn += 1
       pass_flag = false
       # sleep 1
+      game_board.write_csv
     end
     #####
     #     show game results

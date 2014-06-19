@@ -1,10 +1,11 @@
 require 'minitest/unit'  # test framework
 include MiniTest::Assertions
+require 'csv'
 
-OUT = -2   # OUTt of board
 WHT = -1   # WHTite
  EM =  0   # EMpty
 BLK =  1   # BLKack
+OUT =  2   # OUTt of board
 NO_LEGAL_MOVE = [-1,-1]
 
 
@@ -269,6 +270,18 @@ class Board
 
   end
 
+  def write_csv
+    file_name = "./state.csv"
+    CSV.open(file_name, "w") do |csv_next_line|
+      @y_lim.times do | y |
+        stack = []
+        @x_lim.times do | x |
+          stack.push(@state[x][y].to_s)
+        end
+        csv_next_line << stack
+      end
+    end
+  end
 
   attr_accessor :x_lim, :y_lim, :state, :history
 
