@@ -1,5 +1,5 @@
-require 'minitest/unit'  # test framework
-include MiniTest::Assertions
+# require 'minitest/unit'  # test framework
+# include MiniTest::Assertions
 require 'csv'
 
 WHT = -1   # WHTite
@@ -114,7 +114,7 @@ class Board
   def kaihodo xy, color
     x = xy[0]
     y = xy[1]
-    assert_equal state[x][y], EM
+    # assert_equal state[x][y], EM
 
     sqs = captured_squares([x, y], color)
     return kaihodo_inner(sqs)
@@ -137,7 +137,7 @@ class Board
   def place xy, color
     x = xy[0]
     y = xy[1]
-    assert_equal state[x][y], EM
+    # assert_equal state[x][y], EM
 
     sqs = captured_squares([x, y], color)
     history.push([[x,y], sqs])
@@ -172,7 +172,7 @@ class Board
   end
 
   def captured_squares startSq, myColor
-    assert_equal state[ startSq[0] ][ startSq[1] ], EM
+    # assert_equal state[ startSq[0] ][ startSq[1] ], EM
     enemyColor = back(myColor)
 
     stack = []
