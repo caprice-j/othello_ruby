@@ -12,7 +12,7 @@ manual_flag = false
 ROUND_NUM.times do
     pass_flag = false
 
-    game_board = Board.new(6,6)
+    game_board = Board.new(8,8)
     game_board.show(WHT) if ROUND_NUM == 1
     # p_black = RandomAI.new(BLK)   # player_black
 

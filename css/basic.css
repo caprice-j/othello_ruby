@@ -1,14 +1,16 @@
 body {
   text-align: center;
+  margin: auto;
+  width: 320px;
 }
 
 table {
-  margin: 0;
+  margin: auto;
   padding: 0.125em 0.125em;
 }
 
 td.cell {
-  background: #090;
+  background: green;
   border: 1px solid #ddd;
   width: 2em;
   height: 2em;
@@ -17,8 +19,8 @@ td.cell {
 td.cell span.piece {
   display: inline-block;
   border-radius: 1em;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
 }
 td.cell span.white {
   background: #fff;
@@ -27,5 +29,5 @@ td.cell span.black {
   background: #000;
 }
 td.cell span.empty {
-  background: #009;
+  background: #070;
 }

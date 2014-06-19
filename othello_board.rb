@@ -281,6 +281,7 @@ class Board
         csv_next_line << stack
       end
     end
+    `cp ./state.csv ./state_for_read.csv`
   end
 
   attr_accessor :x_lim, :y_lim, :state, :history

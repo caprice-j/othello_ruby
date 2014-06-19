@@ -2,74 +2,144 @@
 <haml lang='ja'>
   <head>
     <meta charset='UTF-8'>
+    <meta content='0' http-equiv='Expires'>
     <link href='css/basic.css' rel='stylesheet'>
     <link href='css/bootstrap.min.css' rel='stylesheet'>
     <!-- %link{:href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", :rel=>"stylesheet"} -->
     <!-- %script(src="http://code.jquery.com/jquery-1.11.1.min.js") -->
     <script src='./js/jquery-1.11.1.min.js'></script>
     <script src='./js/jquery.parse.min.js'></script>
-    <title>Othello_Web_GUI</title>
+    <script src='./js/jquery.periodicalupdater.js'></script>
+    <title>Web_GUI</title>
   </head>
   <body>
     <div id='board_div'></div>
     <!-- %p= hello -->
   </body>
   <script>
-      var csv_state = $.ajax('./state.csv', {
-        dataType: 'text',
-        error: function(xhr, message){
-          console.log('CSV file cannot be found', message);
-          allert('error');
-        },
-        success: function(data){
-          csv = $.parse(data, {
-              delimeter: ',',
-              header: false
-            });
-          },
-          async: false
-        });
-      var lines = csv_state.responseText.split("\n");
-      var board_len = lines[0].split(",").length;
-      var index, arr;
-      var state = [];
-      for(var k = 0; k < board_len; ++k){
-        var new_line = [];
-        for(var i = 0; i < board_len; ++i){
-          var line = lines[i].split(",");
-          new_line.push(line[k]);
-        }
-        state.push(new_line);
-      }
-      var str_accum = [];
-      str_accum.push("<table>");
-    
+      var board_len, state;
       var str_state = ["white", "empty", "black", "out"];
-      for(var y = 0; y < board_len; ++y){
-        str_accum.push("<tr>");
-        if( y !== 0 ){
-          str_accum.push("<th>" + "01234567890"[y] + "</th>");
-        }else{
-          str_accum.push("<th> </th>");
-        }
-        for(var x = 0; x < board_len; ++x){
-          if( x !== 0 ){
-            if( y === 0 ){
-              str_accum.push("<th>" + "Xabcdefghij"[x] + "</th>")
-            }else {
-              str_accum.push("<td id='"+ x + "" + y +"' class='cell' >");
-              var nm = str_state[ parseInt(state[x][y]) + 1 ];
-              console.log(nm);
-              str_accum.push("<span class='piece ");
-              str_accum.push(nm);
-              str_accum.push("'></span></td>");
+    
+      var parseCsv = function(csv_st){
+        var lines = csv_st.responseText.split("\n");
+          board_len = lines[0].split(",").length;
+          state = [];
+          for(var k = 0; k < board_len; ++k){
+            var new_line = [];
+            for(var i = 0; i < board_len; ++i){
+              var line = lines[i].split(",");
+              new_line.push(line[k]);
+            }
+            state.push(new_line);
+          }
+      }
+    
+      var reloadCsv = function(){
+          var csv_state =
+            $.ajax('./state_for_read.csv', {
+              dataType: 'text',
+              error: function(xhr, message){
+                console.log('CSV file cannot be found', message);
+                allert('error');
+              },
+              success: function(data){
+                csv = $.parse(data, {
+                    delimeter: ',',
+                    header: false
+                  });
+                },
+                async: false
+              });
+          parseCsv(csv_state);
+      }
+    
+    
+      var showBoard = function(){
+          $("#board_div").html('');
+    
+          reloadCsv();
+    
+          var str_accum = [];
+          str_accum.push("<table>");
+    
+          for(var y = 0; y < board_len; ++y){
+            str_accum.push("<tr>");
+            if( y !== 0 ){
+              str_accum.push("<th>" + "01234567890"[y] + "  </th>");
+            }else{
+              str_accum.push("<th> </th>");
+            }
+            for(var x = 0; x < board_len; ++x){
+              if( x !== 0 ){
+                if( y === 0 ){
+                  str_accum.push("<th>" + "Xabcdefghij"[x] + "</th>")
+                }else {
+                  str_accum.push("<td id='"+ x + "" + y +"' class='cell' >");
+                  var nm = str_state[ parseInt(state[x][y]) + 1 ];
+                  console.log(nm);
+                  str_accum.push("<span class='piece ");
+                  str_accum.push(nm);
+                  str_accum.push("'></span></td>");
+                }
+              }
+            }
+    
+            str_accum.push("</tr>");
+          }
+          str_accum.push("</table>");
+          $("#board_div").append(str_accum.join(''));
+      }
+      var rewriteBoard = function(){
+    
+          reloadCsv();
+          for(var y = 0; y < board_len; ++y){
+            for(var x = 0; x < board_len; ++x){
+              if( x !== 0 ){
+                if( y === 0 ){
+                }else {
+                  var idName = '#' + x + y + ">span";
+                  var nm = str_state[ parseInt(state[x][y]) + 1 ];
+                  for(var z = 0; z < str_state.length; ++z){
+                    $(idName).removeClass(str_state[z]);
+                  }
+                  $(idName).addClass(nm);
+                }
+              }
             }
           }
-        }
+      };
     
-        str_accum.push("</tr>");
+      var countNum = function(color_string){
+        var num = 0;
+        for(var y = 1; y < board_len; ++y){
+          for(var x = 1; x < board_len; ++x){
+            var idName = '#' + x + y + ">span";
+            if( $(idName).attr('class').indexOf(color_string) !== -1 )
+              num++;
+          }
+        }
+        return num;
       }
-      str_accum.push("</table>");
-      $("#board_div").append(str_accum.join(''));
+    
+      var winnerIs = function(){
+        var blk = countNum("black");
+        var wht = countNum("white");
+        if( blk > wht ){
+          $("#board_div").append("black WIN \n");
+        }else if( blk < wht ){
+          $("#board_div").append("white WIN \n");
+        }else{
+          $("#board_div").append("draw \n");
+        }
+      };
+    
+      showBoard();
+      var timer = setInterval(function(){ rewriteBoard();
+          if ( countNum("empty") === 0 ){
+            winnerIs();
+            clearInterval(timer);
+          }
+          $("#board_div").append(" X");
+        }, 3000);
   </script>
 </haml>
