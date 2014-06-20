@@ -3,8 +3,9 @@
   %head
     %meta{:charset => "UTF-8"}
     %meta{'http-equiv' => 'Expires', :content=>"0"}
+    %meta{:name=>'viewport', :content=>'minimum-scale=1.0, maximum-scale=2.0, initial-scale=1.0'}
     %link{:rel => "stylesheet", :href => "css/basic.css"}
-    %link{:rel => "stylesheet", :href => "css/bootstrap.min.css"}
+    %link{:rel => "stylesheet", :href => "css/bootstrap.css"}
     / %link{:href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", :rel=>"stylesheet"}
     / %script(src="http://code.jquery.com/jquery-1.11.1.min.js")
     %script(src="./js/jquery-1.11.1.min.js")
@@ -13,6 +14,10 @@
     %title Web_GUI
   %body
     %div#board_div
+    %h3#complexion-title Complexion:
+    %div.progress#complexion
+      %div.progress-bar.progress-bar-black#complexion-black
+      %div.progress-bar.progress-bar-white#complexion-white
     / %p= hello
   :javascript
 
@@ -132,8 +137,22 @@
         }
       };
 
+      var rewriteComplexion = function(){
+        var blk = countNum("black");
+        var wht = countNum("white");
+        var all = blk + wht;
+        var blk_width = blk / all * 100;
+        var wht_width = wht / all * 100;
+        $('#complexion-black').attr('style', 'width:' + blk_width + '%');
+        $('#complexion-white').attr('style', 'width:' + wht_width + '%');
+        $('#complexion-black').html( blk );
+        $('#complexion-white').html( wht );
+      }
+
       showBoard();
-      var timer = setInterval(function(){ rewriteBoard();
+      var timer = setInterval(function(){
+          rewriteBoard();
+          rewriteComplexion();
           if ( countNum("empty") === 0 ){
             winnerIs();
             clearInterval(timer);

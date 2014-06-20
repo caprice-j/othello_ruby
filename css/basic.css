@@ -1,11 +1,14 @@
+@charset "UTF-8";
 body {
   text-align: center;
   margin: auto;
   width: 320px;
+  height: 480px;
 }
 
 table {
   margin: auto;
+  margin-top: 30px;
   padding: 0.125em 0.125em;
 }
 
@@ -30,4 +33,26 @@ td.cell span.black {
 }
 td.cell span.empty {
   background: #070;
+}
+
+/* progress-bar */
+#complexion-title {
+  font-family: Verdana, "游ゴシック", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+div#complexion {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 3%;
+  /*border: 1px solid #000;*/
+}
+
+.progress-bar-black#complexion-black {
+  background-color: #333;
+  color: #fff;
+}
+
+.progress-bar-white#complexion-white {
+  background-color: #eee;
+  color: #000;
 }
