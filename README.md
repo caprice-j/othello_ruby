@@ -3,7 +3,7 @@ othello_ruby
 
 Made as an example of Artificial Intelligence
 
-![](./img/view.png)
+![](./img/view.gif)
 
 Features
 ------------
